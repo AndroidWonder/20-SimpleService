@@ -9,16 +9,19 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
 
 public class SimpleService extends Activity {
-    EditText txtMsg;
-    Button btnStopService;
-    ComponentName service;
-    Intent intentMyService;
-    
+   private EditText txtMsg;
+    private Button btnStopService;
+    private ComponentName service;
+    private Intent intentMyService;
+    private final static String tag = "LogService";
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,16 +38,11 @@ public class SimpleService extends Activity {
         btnStopService = (Button) findViewById(R.id.btnStopService);
         btnStopService.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				try {
-					stopService(intentMyService);
-					txtMsg.setText("Stopping Service: \n" +
-							        service.getClassName());
-				} catch (Exception e) {
-					Toast.makeText(SimpleService.this, e.getMessage(), Toast.LENGTH_LONG).show();
-				}
-				
+                stopService(intentMyService);
+                Log.i (tag, "Service stopped");
+                txtMsg.setText("Stopping Service: \n" +
+                        service.getClassName());
 			}
-        	
         });
    
     }
